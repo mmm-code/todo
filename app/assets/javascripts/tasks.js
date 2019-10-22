@@ -5,7 +5,9 @@
     // <li> tags
     function taskHtml(task) {
       var checkedStatus = task.done ? "checked" : "";
-      var liElement = '<li><div class="view"><input class="toggle" type="checkbox"' +  " data-id='" + task.id + "'" +
+      var liClass = task.done ? "completed" : "";
+      var liElement = '<li class="' + liClass + '">' + 
+          '<div class="view"><input class="toggle" type="checkbox"' +  " data-id='" + task.id + "'" +
           checkedStatus +
           '><label>' +
           task.title +
@@ -35,6 +37,7 @@
     }
     
     $.get("/tasks").success( function( data ) {
+      
       var htmlString = "";
       
       $.each(data, function(index, task) {
@@ -49,6 +52,7 @@
     });
     
     $('#new-form').submit(function(event) {
+      
       event.preventDefault();
       var textbox = $('.new-todo');
       var payload = {
@@ -61,6 +65,7 @@
         var ulTodos = $('.todo-list');
         ulTodos.append(htmlString);
         $('.toggle').click(toggleTask);
+        $('.new-todo').val('');
       });
     });
       
